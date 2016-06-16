@@ -1,16 +1,16 @@
 <template>
-  <vk-docs-page
+  <vk-docs-page-section
     component="alert"
     code-slot="Alert!"
     :props="props"
     :slots="slots">
     <div slot="demo">
-      The demo
+      <vk-docs-table-props></vk-docs-table-props>
     </div>
     <div slot="desc">
       The desc
     </div>
-  </vk-docs-page>
+  </vk-docs-page-section>
 </template>
 
 <script>
