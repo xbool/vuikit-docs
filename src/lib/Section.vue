@@ -4,24 +4,6 @@
     <div class="uk-margin-large">
       <slot name="desc"></slot>
     </div>
-    <vk-tabs>
-      <vk-tab label="Props" v-if="props">
-        <slot name="props">
-          <vk-docs-table-props :rows="props"></vk-docs-table-props>
-        </slot>
-      </vk-tab>
-      <vk-tab label="Slots" v-if="slots">
-        <slot name="slots">
-          <table-slots :rows="slots"></table-slots>
-        </slot>
-      </vk-tab>
-      <vk-tab label="Events" v-if="events">
-        <table-events :rows="events"></table-events>
-      </vk-tab>
-      <vk-tab label="Code">
-        <pre><code class="html hljs" v-html="code | beautify | highlight"></code></pre>
-      </vk-tab>
-    </vk-tabs>
   </div>
 </template>
 

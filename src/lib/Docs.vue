@@ -6,13 +6,12 @@
     <div id="tm-offcanvas" class="uk-offcanvas">
       <div class="uk-offcanvas-bar">
         <ul class="uk-nav tm-nav uk-nav-offcanvas">
-          <li v-for="page in $children"
+          <li v-for="(item, path) in menu"
             :class="{
-              'uk-active': current === page
+              'uk-active': current === item
             }">
-            <a :href="'#' + page.toLowerCase()"
-              @click="current = page"
-              v-text="page">
+            <a v-link="path"
+              v-text="item">
             </a>
           </li>
         </ul>
@@ -23,13 +22,12 @@
         <div class="uk-grid" data-uk-grid-margin>
           <div class="tm-sidebar uk-width-medium-1-4 uk-hidden-small">
             <ul class="uk-nav tm-nav">
-              <li v-for="page in pages"
+              <li v-for="(item, path) in menu"
                 :class="{
-                  'uk-active': current === page
+                  'uk-active': current === item
                 }">
-                <a :href="'#' + page.toLowerCase()"
-                  @click="current = page"
-                  v-text="page">
+                <a v-link="path"
+                  v-text="item">
                 </a>
               </li>
             </ul>
@@ -40,8 +38,7 @@
                 {{ current }}
               </h1>
               <hr class="uk-article-divider">
-              <!-- <component :is="'Page' + current"></component> -->
-              <div v-slot></div>
+              <router-view></router-view>
               <span class="uk-hidden-large uk-text-small uk-text-muted">
                 Note: Rotate the screen to see the rest of the options.
               </span>
@@ -58,27 +55,19 @@ import { each } from 'lodash'
 
 export default {
   data: () => ({
-    pages: [],
     current: ''
   }),
-  directives: {
-    slot: {
-      bind: function () {
-        const host = this.vm
-        const root = host.$parent
-        const slots = host._slotContents.default.children
-        // compile pages
-        for (let i = 0; i < slots.length; i++) {
-          const node = slots[i].cloneNode(true)
-          console.log(node)
-          this.el.appendChild(node)
-          root.$compile(node, host, this._scope)
-        }
-        // update pages list
-        each(host.$children, child => {
-          host.pages.push(child.title)
-        })
-      }
+  computed: {
+    // recreate a menu
+    // from the routes
+    menu () {
+      const menu = {}
+      // didn't found a better way...
+      const routes = this.$router._recognizer.names
+      each(routes, (route, name) => {
+        menu[name] = route.segments[0].string
+      })
+      return menu
     }
   }
 }

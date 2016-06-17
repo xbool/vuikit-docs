@@ -1,12 +1,14 @@
-import Pages from './components/Pages'
-import Page from './components/Page'
-import PageSection from './components/PageSection'
-import TableProps from './components/TableProps'
+import Docs from './Docs'
+import Section from './Section'
+import TableEvents from './TableEvents'
+import TableSlots from './TableSlots'
+import TableProps from './TableProps'
 
-const vuikitDocs = {
-  Pages,
-  Page,
-  PageSection,
+const plugin = {
+  Docs,
+  Section,
+  TableEvents,
+  TableSlots,
   TableProps,
   install (Vue) {
     if (this.installed) {
@@ -22,13 +24,14 @@ const vuikitDocs = {
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(vuikitDocs)
+  window.Vue.use(plugin)
 }
 
 export {
-  Pages,
-  Page,
-  PageSection,
+  Docs,
+  Section,
+  TableEvents,
+  TableSlots,
   TableProps,
-  vuikitDocs as default
+  plugin as default
 }

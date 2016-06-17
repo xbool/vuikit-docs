@@ -1,22 +1,23 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import App from './App'
-import TableSlots from './components/TableSlots'
-import TableEvents from './components/TableEvents'
 import Vuikit from 'vuikit'
-import VuikitDocs from './'
+import VuikitDocs from './lib'
 
-// init Vuikit
 Vue.use(Vuikit)
 Vue.use(VuikitDocs)
+Vue.use(VueRouter)
 
-// register global components
-Vue.component('TableSlots', TableSlots)
-Vue.component('TableEvents', TableEvents)
-
-/* eslint-disable no-new */
-new Vue({
-  el: 'body',
-  components: {
-    App
+// init views router
+const router = new VueRouter()
+router.map({
+  '/events': {
+    name: 'Table Events',
+    component: require('./views/TableEvents.vue')
+  },
+  '/props': {
+    name: 'Table Props',
+    component: require('./views/TableProps.vue')
   }
 })
+router.start(App, '#app')

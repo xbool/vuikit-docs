@@ -1,20 +1,22 @@
 <template>
-  <vk-docs-page-section
-    component="alert"
-    code-slot="Alert!"
-    :props="props"
-    :slots="slots">
-    <div slot="demo">
-      <vk-docs-table-props></vk-docs-table-props>
-    </div>
-    <div slot="desc">
-      The desc
-    </div>
-  </vk-docs-page-section>
+  <div>
+    <vk-docs-section
+      component="alert"
+      code-slot="Alert!"
+      :props="props"
+      :slots="slots">
+      <div slot="demo">
+        <vk-docs-table-props></vk-docs-table-props>
+      </div>
+      <div slot="desc">
+        The desc
+      </div>
+    </vk-docs-section>
+  </div>
 </template>
 
 <script>
-import mixins from '../../mixins'
+import mixins from '../mixins'
 
 export default {
   mixins: [mixins],

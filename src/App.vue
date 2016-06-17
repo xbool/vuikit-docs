@@ -1,22 +1,9 @@
 <template>
   <div>
-    <vk-docs-pages>
-      <vk-docs-page title="Props Table">
-        <page-alert></page-alert>
-      </vk-docs-page>
-      <vk-docs-page title="Other">
-        Some other
-      </vk-docs-page>
-    </vk-docs-pages>
+    <vk-docs-docs></vk-docs-docs>
   </div>
 </template>
 
 <script>
-import PageAlert from './pages/Alert'
-
-export default {
-  components: {
-    PageAlert
-  }
-}
+export default {}
 </script>
