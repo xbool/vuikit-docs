@@ -6,10 +6,7 @@
     <div id="tm-offcanvas" class="uk-offcanvas">
       <div class="uk-offcanvas-bar">
         <ul class="uk-nav tm-nav uk-nav-offcanvas">
-          <li v-for="(item, path) in menu"
-            :class="{
-              'uk-active': current === item
-            }">
+          <li v-for="(item, path) in menu" v-link-active>
             <a v-link="path"
               v-text="item">
             </a>
@@ -22,10 +19,7 @@
         <div class="uk-grid" data-uk-grid-margin>
           <div class="tm-sidebar uk-width-medium-1-4 uk-hidden-small">
             <ul class="uk-nav tm-nav">
-              <li v-for="(item, path) in menu"
-                :class="{
-                  'uk-active': current === item
-                }">
+              <li v-for="(item, path) in menu" v-link-active>
                 <a v-link="path"
                   v-text="item">
                 </a>
@@ -34,14 +28,7 @@
           </div>
           <div class="uk-width-medium-3-4">
             <article class="uk-article">
-              <h1 class="uk-article-title">
-                {{ current }}
-              </h1>
-              <hr class="uk-article-divider">
               <router-view></router-view>
-              <span class="uk-hidden-large uk-text-small uk-text-muted">
-                Note: Rotate the screen to see the rest of the options.
-              </span>
             </article>
           </div>
         </div>
@@ -54,18 +41,14 @@
 import { each } from 'lodash'
 
 export default {
-  data: () => ({
-    current: ''
-  }),
   computed: {
-    // recreate a menu
-    // from the routes
+    // recreates a menu from the routes
+    // didn't found a better way...
     menu () {
       const menu = {}
-      // didn't found a better way...
       const routes = this.$router._recognizer.names
       each(routes, (route, name) => {
-        menu[name] = route.segments[0].string
+        menu[name] = '/' + route.segments[0].string
       })
       return menu
     }

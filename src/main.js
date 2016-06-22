@@ -9,15 +9,18 @@ Vue.use(VuikitDocs)
 Vue.use(VueRouter)
 
 // init views router
-const router = new VueRouter()
+const router = new VueRouter({
+  linkActiveClass: 'uk-active'
+})
+
 router.map({
-  '/events': {
-    name: 'Table Events',
-    component: require('./views/TableEvents.vue')
+  '/section': {
+    name: 'Section',
+    component: require('./views/Section.vue')
   },
-  '/props': {
-    name: 'Table Props',
-    component: require('./views/TableProps.vue')
+  '/button': {
+    name: 'Button',
+    component: require('./views/Button.vue')
   }
 })
 router.start(App, '#app')

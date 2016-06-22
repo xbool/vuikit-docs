@@ -1,15 +1,9 @@
 import Docs from './Docs'
 import Section from './Section'
-import TableEvents from './TableEvents'
-import TableSlots from './TableSlots'
-import TableProps from './TableProps'
 
 const plugin = {
   Docs,
   Section,
-  TableEvents,
-  TableSlots,
-  TableProps,
   install (Vue) {
     if (this.installed) {
       return
@@ -30,8 +24,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
   Docs,
   Section,
-  TableEvents,
-  TableSlots,
-  TableProps,
   plugin as default
 }

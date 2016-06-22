@@ -10,20 +10,20 @@
     </tr>
     </thead>
     <tbody>
-      <tr v-else class="uk-table-middle" v-for="row in sortedRows">
-        <td v-text="row.name"></td>
-        <td class="tm-docs-hidden-medium" v-text="row.type | type"></td>
+      <tr v-else class="uk-table-middle" v-for="(name, prop) in rows">
+        <td v-text="name"></td>
+        <td class="tm-docs-hidden-medium" v-text="prop.type | type"></td>
         <td class="tm-docs-hidden-medium uk-text-truncate">
-          <code v-text="row.default | stringify"></code>
+          <code v-text="prop.default | stringify"></code>
         </td>
-        <td class="tm-docs-hidden-small" v-html="row.description"></td>
+        <td class="tm-docs-hidden-small" v-html="prop.description"></td>
         <td class="tm-docs-hidden-small" v-if="demo" is="PropsColDemo"
-          :value.sync="row.value"
-          :default="row.default"
-          :type="row.type | type"
-          :demo="row.demo"
-          :options="row.options"
-          :editable="row.editable">
+          :value.sync="prop.value"
+          :default="prop.default"
+          :type="prop.type | type"
+          :demo="prop.demo"
+          :options="prop.options"
+          :editable="prop.editable">
         </td>
       </tr>
     </tbody>

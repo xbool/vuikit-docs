@@ -1,46 +1,62 @@
 <template>
   <div>
+    <h2 class="tm-docs-subtitle" v-text="title"></h2>
+    <hr class="uk-article-divider">
     <slot name="demo"></slot>
     <div class="uk-margin-large">
-      <slot name="desc"></slot>
+      <slot></slot>
     </div>
+    <vk-tabs>
+      <vk-tab label="Props" v-if="props">
+        <table-props :rows="props"></table-props>
+        <span class="uk-hidden-large uk-text-small uk-text-muted">
+          Note: Rotate the screen to see the rest of the options.
+        </span>
+      </vk-tab>
+      <vk-tab label="Slots" v-if="slots">
+        <table-slots :rows="slots"></table-slots>
+      </vk-tab>
+      <vk-tab label="Events" v-if="events">
+        <table-events :rows="events"></table-events>
+      </vk-tab>
+      <vk-tab label="Code" active>
+        <pre><code v-code="demoCode"></code></pre>
+      </vk-tab>
+    </vk-tabs>
   </div>
 </template>
 
 <script>
-import hljs from 'highlight.js/lib/highlight'
-import beautify from 'js-beautify'
+import vCode from '../directives/code'
+import TableProps from '../components/TableProps'
+import TableEvents from '../components/TableEvents'
+import TableSlots from '../components/TableSlots'
 import {
-  // mapValues,
-  // pickBy,
+  mapValues,
+  pickBy,
   each,
-  // isEqual,
+  isEqual,
   isEmpty,
   isArray,
   isObject,
   kebabCase
+  // reduce
 } from 'lodash'
 
-// init highlight language
-hljs.registerLanguage('html', require('highlight.js/lib/languages/xml'))
-
 export default {
+  directives: {
+    code: vCode
+  },
+  components: {
+    TableProps,
+    TableEvents,
+    TableSlots
+  },
   data: () => ({
     showEvents: false
   }),
   props: {
-    component: {
-      type: String,
-      default: ''
-    },
-    // emulates the content
-    // for the code default slot
-    codeSlot: {
-      type: String,
-      default: ''
-    },
-    // code before the main demo code
-    codePre: {
+    title: {
       type: String,
       default: ''
     },
@@ -48,92 +64,75 @@ export default {
       type: [Object, Boolean],
       default: false
     },
+    events: {
+      type: [Object, Boolean],
+      default: false
+    },
     slots: {
       type: [Object, Boolean],
       default: false
     },
-    events: {
-      type: [Object, Boolean],
-      default: false
+    code: {
+      type: String,
+      default: ''
     }
   },
   computed: {
-    // code programatically created
-    code () {
-      var el = document.createElement(`vk-${this.component}`)
-      // add props as el attributes
-      each(this.propsCustomValues, (value, key) => {
-        // true values can be set only with key
-        if (value === true) {
-          value = ''
-        }
-        if (isArray(value) || isObject(value)) {
-          if (isEmpty(value)) {
-            return true
-          }
-          // convert into literal
-          value = JSON.stringify(value)
-            .replace(/"/g, '\'') // not double quotes
-          // bind is required
-          key = `:${key}`
-        } else if (Number.isInteger(value) || value === false) {
-          key = `:${key}`
-        }
-        el.setAttribute(kebabCase(key), value)
+    demoCode () {
+      const propsDefaults = mapValues(this.props, prop => typeof prop.default === 'function'
+        ? prop.default.call()
+        : prop.default)
+      // get demo props which value differ from defaults
+      const demoProps = pickBy(mapValues(this.props, 'value'), (value, key) => {
+        return value !== undefined && !isEqual(value, propsDefaults[key])
       })
-      // add el inner text
-      if (this.codeSlot) {
-        el.innerHTML = '\n' + this.codeSlot + '\n'
-      }
-      // workaround to get el as text
-      var tmp = document.createElement('div')
-      tmp.appendChild(el)
-      return this.codePre + tmp.innerHTML
-        .replace(/=""/g, '') // remove empty values
-    },
-    // return props from demo that
-    // differ from component defaults
-    propsCustomValues () {
-      // const propsDefaults = getComponentDefaults(this.component)
-      // return pickBy(mapValues(this.props, 'value'), (value, name) => {
-      //   if (isObject(value) && !isEmpty(value)) {
-      //     return false
-      //   } else {
-      //     return !isEqual(propsDefaults[name], value)
-      //   }
-      // })
-    }
-  },
-  filters: {
-    beautify (str) {
-      return beautify.html(str, {
-        wrap_attributes: 'force',
-        wrap_attributes_indent_size: 2,
-        indent_size: 2
-      })
-      // add new line for closing tags, if no children
-      .replace(/><\/vk-(.*)>$/g, '>\n</vk-$1>')
-      // add new line on first attr for main component
-      .replace(/^<vk-(\S*) (\S*)/, '<vk-$1\n  $2')
-    },
-    highlight (str) {
-      return hljs.highlight('html', str).value
+      // convert props to attributes
+      var attrs = toAttrs(demoProps)
+      // replace attrs and return the final code
+      return this.code.replace('{{attrs}}', attrs)
     }
   }
+}
+
+/*
+ * Converts an Object to String as node attributes
+ */
+function toAttrs (props) {
+  let attrs = ''
+  each(props, (value, key) => {
+    // literal trues can be set without value, eg. disabled
+    if (value === true) {
+      value = ''
+    }
+    // literal numbers requires binding (:) to be evaluated as such
+    if (Number.isInteger(value) || value === false) {
+      key = `:${key}`
+    }
+    // Arrays and Objects
+    if (isArray(value) || isObject(value)) {
+      // skip if empty
+      if (isEmpty(value)) {
+        return true
+      }
+      // convert into literal
+      value = JSON.stringify(value)
+      // convert double quotes
+      value = value.replace(/"/g, '\'')
+      // bind is required
+      key = `:${key}`
+    }
+    attrs += value
+      ? `${kebabCase(key)}="${value}" `
+      : `${kebabCase(key)} `
+  })
+  return attrs
 }
 </script>
 
 <style>
 /*
-github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+ Highlight - github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 */
-
-.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  color: #333;
-}
 
 .hljs-comment,
 .hljs-quote {
