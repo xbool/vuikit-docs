@@ -12,8 +12,12 @@
       the component props. Optionally a demo field can be displayed for each prop with
       control inputs adapted to each type of prop.</p>
       <p>When the props object is properly shared bitween the demo and the table,
-      the docs become interactive as seen in the
-      <a href="http://vuikit.github.io/vuikit/" target="_blank">Vuikit main docs</a>.</p>
+      the docs become interactive as seen in the <a href="http://vuikit.github.io/vuikit/" target="_blank">Vuikit main docs</a>.</p>
+      <vk-docs-code>
+        <vk-button-radio>
+          <vk-button value="1">1</vk-button>
+        </vk-button-radio>
+      </vk-docs-code>
     </div>
   </div>
 </template>

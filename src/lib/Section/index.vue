@@ -85,9 +85,6 @@ export default {
       // replace attrs and return the final code
       return this.code.replace('{props}', attrs)
     }
-  },
-  directives: {
-    code: require('./vCode')
   }
 }
 
