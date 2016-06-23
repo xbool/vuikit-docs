@@ -14,9 +14,9 @@ const router = new VueRouter({
 })
 
 router.map({
-  '/section': {
-    name: 'Section',
-    component: require('./views/Section.vue')
+  '/props': {
+    name: 'Props',
+    component: require('./views/Props.vue')
   },
   '/section-example': {
     name: 'Section Example',

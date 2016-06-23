@@ -1,9 +1,11 @@
 import Docs from './Docs'
 import Section from './Section'
+import Props from './Props'
 
 const plugin = {
   Docs,
   Section,
+  Props,
   install (Vue) {
     if (this.installed) {
       return
@@ -24,5 +26,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
   Docs,
   Section,
+  Props,
   plugin as default
 }

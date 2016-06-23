@@ -2,12 +2,10 @@
   <div>
     <h2 class="tm-docs-subtitle" v-text="title"></h2>
     <hr class="uk-article-divider">
-    <div class="uk-margin-large">
-      <slot></slot>
-    </div>
+    <slot></slot>
     <vk-tabs>
       <vk-tab label="Props" v-if="props">
-        <table-props :rows="props"></table-props>
+        <vk-docs-props :props="props"></vk-docs-props>
         <span class="uk-hidden-large uk-text-small uk-text-muted">
           Note: Rotate the screen to see the rest of the options.
         </span>
@@ -26,11 +24,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import vCode from '../directives/code'
-import TableProps from '../components/TableProps'
-import TableEvents from '../components/TableEvents'
-import TableSlots from '../components/TableSlots'
+import TableEvents from './Events'
+import TableSlots from './Slots'
 import {
   mapValues,
   pickBy,
@@ -40,29 +35,10 @@ import {
   isArray,
   isObject,
   kebabCase
-  // reduce
 } from 'lodash'
 
 export default {
-  ready () {
-    const demoEl = getElementsByAttribute('vk-docs-demo', this.$el)[0]
-    if (demoEl) {
-      each(this.events, (obj, name) => {
-        // init emited property
-        // Vue.set(obj, 'emited', false)
-        // fires emited signal when events triggered
-        demoEl.__vue__.$on(name, () => {
-          Vue.set(obj, 'emited', true)
-          // revert value after
-          setTimeout(() => {
-            Vue.set(obj, 'emited', false)
-          }, 400)
-        })
-      })
-    }
-  },
   components: {
-    TableProps,
     TableEvents,
     TableSlots
   },
@@ -111,7 +87,7 @@ export default {
     }
   },
   directives: {
-    code: vCode
+    code: require('./vCode')
   }
 }
 
@@ -147,20 +123,6 @@ function toAttrs (props) {
       : `${kebabCase(key)} `
   })
   return attrs
-}
-
-/*
- * Get DOM elements by attribute
- */
-function getElementsByAttribute (attribute, container) {
-  const matchingElements = []
-  const allElements = (container || document).getElementsByTagName('*')
-  for (let i = 0, n = allElements.length; i < n; i++) {
-    if (allElements[i].getAttribute(attribute) !== null) {
-      matchingElements.push(allElements[i])
-    }
-  }
-  return matchingElements
 }
 </script>
 
