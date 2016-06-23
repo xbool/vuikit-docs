@@ -18,9 +18,9 @@ router.map({
     name: 'Section',
     component: require('./views/Section.vue')
   },
-  '/button': {
-    name: 'Button',
-    component: require('./views/Button.vue')
+  '/section-example': {
+    name: 'Section Example',
+    component: require('./views/SectionExample.vue')
   }
 })
 router.start(App, '#app')

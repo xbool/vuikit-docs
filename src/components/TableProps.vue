@@ -6,24 +6,28 @@
         <th class="tm-docs-hidden-medium">Type</th>
         <th class="tm-docs-hidden-medium">Default</th>
         <th class="tm-docs-hidden-small">Description</th>
-        <th class="tm-docs-hidden-small" v-if="demo">Demo</th>
+        <th class="tm-docs-hidden-small" v-if="renderDemo">Demo</th>
     </tr>
     </thead>
     <tbody>
-      <tr v-else class="uk-table-middle" v-for="(name, prop) in rows">
+      <tr v-for="(name, prop) in rows"
+        class="uk-table-middle">
         <td v-text="name"></td>
         <td class="tm-docs-hidden-medium" v-text="prop.type | type"></td>
         <td class="tm-docs-hidden-medium uk-text-truncate">
           <code v-text="prop.default | stringify"></code>
         </td>
         <td class="tm-docs-hidden-small" v-html="prop.description"></td>
-        <td class="tm-docs-hidden-small" v-if="demo" is="PropsColDemo"
+        <td v-if="prop.demo" is="DemoCol"
+          class="tm-docs-hidden-small"
           :value.sync="prop.value"
           :default="prop.default"
           :type="prop.type | type"
-          :demo="prop.demo"
-          :options="prop.options"
-          :editable="prop.editable">
+          :options="prop.demo.options"
+          :editable="prop.demo.editable">
+        </td>
+        <td v-else
+          class="tm-docs-hidden-small">
         </td>
       </tr>
     </tbody>
@@ -31,24 +35,20 @@
 </template>
 
 <script>
-import { isObject, isArray, sortBy } from 'lodash'
-import PropsColDemo from './TablePropsColDemo'
+import { isObject, isArray, some } from 'lodash'
+import DemoCol from './TablePropsColDemo'
 
 export default {
-  components: { PropsColDemo },
+  components: { DemoCol },
   props: {
     rows: {
       type: Object,
-      default: () => ({})
-    },
-    demo: {
-      type: Boolean,
-      default: true
+      required: true
     }
   },
   computed: {
-    sortedRows: function () {
-      return sortBy(this.rows, 'order')
+    renderDemo () {
+      return some(this.rows, row => row.demo !== undefined)
     }
   },
   filters: {

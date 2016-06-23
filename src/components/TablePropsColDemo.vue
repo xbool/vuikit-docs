@@ -1,34 +1,32 @@
 <template>
   <td class="uk-form uk-text-truncate">
-    <template v-if="demo">
-      <!-- some values should just be displayed -->
-      <span v-if="!editable || !demoField" v-text="value"></span>
-      <template v-else>
-        <!-- Select -->
-        <div class="uk-form-select"
-          v-if="demoField === 'Select'">
-          <a href="" v-text="!selectValue || value === default
-            ? '<>'
-            : selectValue">
-          </a>
-          <select v-model="value">
-            <option :value="default">default</option>
-            <option v-for="(key, value) in selectOptions"
-              :value="value"
-              v-text="key">
-            </option>
-          </select>
-        </div>
-        <!-- String -->
-        <input v-if="(demoField === 'String') || demoField === 'Number'"
-          type="input"
-          v-model="value">
-        <!-- Boolean -->
-        <input v-if="demoField === 'Boolean'"
-          type="checkbox"
-          :checked="value"
-          @click="value = !value">
-      </template>
+    <!-- some values should just be displayed -->
+    <span v-if="!editable || !demoField" v-text="value"></span>
+    <template v-else>
+      <!-- Select -->
+      <div class="uk-form-select"
+        v-if="demoField === 'Select'">
+        <a href="" v-text="!selectValue || value === default
+          ? '<>'
+          : selectValue">
+        </a>
+        <select v-model="value">
+          <option :value="default">default</option>
+          <option v-for="(key, value) in selectOptions"
+            :value="value"
+            v-text="key">
+          </option>
+        </select>
+      </div>
+      <!-- String -->
+      <input v-if="(demoField === 'String') || demoField === 'Number'"
+        type="input"
+        v-model="value">
+      <!-- Boolean -->
+      <input v-if="demoField === 'Boolean'"
+        type="checkbox"
+        :checked="value"
+        @click="value = !value">
     </template>
   </td>
 </template>
@@ -48,11 +46,6 @@ export default {
     // prop type
     type: {
       required: true
-    },
-    // wheter to display the demo
-    demo: {
-      type: [Boolean, String],
-      default: true
     },
     // demo options
     options: {

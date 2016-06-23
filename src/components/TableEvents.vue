@@ -4,24 +4,28 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
-        <th>Emited</th>
+        <th class="uk-text-center">Emited</th>
       </tr>
     </thead>
     <tbody>
-      <tr is="EventsRow" v-for="(name, row) in rows"
-        :name="name"
-        :description="row.description"
-        :emited.sync="row.emited">
+      <tr v-for="(name, row) in rows"
+        class="uk-table-middle">
+        <td v-text="name"></td>
+        <td v-html="row.description"></td>
+        <td class="uk-form uk-text-center">
+          <i :class="{
+            'uk-icon-circle-o': !row.emited,
+            'uk-icon-circle': row.emited,
+            'uk-text-success': row.emited
+          }"></i>
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-import EventsRow from './TableEventsRow'
-
 export default {
-  components: { EventsRow },
   props: {
     rows: {
       type: Object,

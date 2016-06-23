@@ -2,7 +2,6 @@
   <div>
     <h2 class="tm-docs-subtitle" v-text="title"></h2>
     <hr class="uk-article-divider">
-    <slot name="demo"></slot>
     <div class="uk-margin-large">
       <slot></slot>
     </div>
@@ -19,7 +18,7 @@
       <vk-tab label="Events" v-if="events">
         <table-events :rows="events"></table-events>
       </vk-tab>
-      <vk-tab label="Code" active>
+      <vk-tab label="Code" v-if="code">
         <pre><code v-code="demoCode"></code></pre>
       </vk-tab>
     </vk-tabs>
@@ -27,6 +26,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import vCode from '../directives/code'
 import TableProps from '../components/TableProps'
 import TableEvents from '../components/TableEvents'
@@ -44,8 +44,22 @@ import {
 } from 'lodash'
 
 export default {
-  directives: {
-    code: vCode
+  ready () {
+    const demoEl = getElementsByAttribute('vk-docs-demo', this.$el)[0]
+    if (demoEl) {
+      each(this.events, (obj, name) => {
+        // init emited property
+        // Vue.set(obj, 'emited', false)
+        // fires emited signal when events triggered
+        demoEl.__vue__.$on(name, () => {
+          Vue.set(obj, 'emited', true)
+          // revert value after
+          setTimeout(() => {
+            Vue.set(obj, 'emited', false)
+          }, 400)
+        })
+      })
+    }
   },
   components: {
     TableProps,
@@ -59,6 +73,10 @@ export default {
     title: {
       type: String,
       default: ''
+    },
+    demo: {
+      type: [Object, Boolean],
+      default: false
     },
     props: {
       type: [Object, Boolean],
@@ -89,8 +107,11 @@ export default {
       // convert props to attributes
       var attrs = toAttrs(demoProps)
       // replace attrs and return the final code
-      return this.code.replace('{{attrs}}', attrs)
+      return this.code.replace('{props}', attrs)
     }
+  },
+  directives: {
+    code: vCode
   }
 }
 
@@ -126,6 +147,20 @@ function toAttrs (props) {
       : `${kebabCase(key)} `
   })
   return attrs
+}
+
+/*
+ * Get DOM elements by attribute
+ */
+function getElementsByAttribute (attribute, container) {
+  const matchingElements = []
+  const allElements = (container || document).getElementsByTagName('*')
+  for (let i = 0, n = allElements.length; i < n; i++) {
+    if (allElements[i].getAttribute(attribute) !== null) {
+      matchingElements.push(allElements[i])
+    }
+  }
+  return matchingElements
 }
 </script>
 

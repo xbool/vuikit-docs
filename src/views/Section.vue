@@ -3,9 +3,8 @@
     <vk-docs-section
       title="Section"
       :props="props">
-      The <code>vk-docs-section</code> component will render a page section,
-      the same one this text is displayed in. A section is focused on presenting
-      a component demo, Props, Events and Slots as aplicable.
+      The <code>vk-docs-section</code> component will render a page section
+      composed of a Title, Description and optional Demo, Props, Events and Slots tabs.
       </section>
     </div>
   </div>
@@ -27,11 +26,13 @@ export default {
 
 const props = {
   title: {
-    description: 'The title that will be displayed above each section.',
-    demo: false
+    description: 'The title that will be displayed above each section.'
   },
   props: {
-    description: 'The Object containing the Props API definition.'
+    description: `The props Object definition, the same one used in the component
+      with the following additional fields:
+      <br />- <b>description</b>, the prop description you are reading now
+      <br />- <b>demo</b>, the object defining the demo field`
   }
 }
 

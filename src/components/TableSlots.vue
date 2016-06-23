@@ -7,19 +7,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr is="SlotsRow" v-for="(name, row) in rows"
-        :name="name"
-        :description="row.description">
+      <tr v-for="(name, row) in rows"
+        class="uk-table-middle">
+        <td v-text="name"></td>
+        <td v-html="row.description"></td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-import SlotsRow from './TableSlotsRow'
-
 export default {
-  components: { SlotsRow },
   props: {
     rows: {
       type: Object,
