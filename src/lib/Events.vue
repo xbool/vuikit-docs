@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(name, row) in rows"
+      <tr v-for="(name, row) in events"
         class="uk-table-middle">
         <td v-text="name"></td>
         <td v-html="row.description"></td>
@@ -31,10 +31,10 @@ import { each } from 'lodash'
 export default {
   ready () {
     // get demo element from context
-    const demoNode = getElementsByAttribute('vk-docs-demo', this._context.$el)[0]
+    const demoNode = getElementsByAttribute('vk-ref-events', this._context.$el)[0]
     if (demoNode) {
       // listen for all events triggered by the demo
-      each(this.rows, (obj, name) => {
+      each(this.events, (obj, name) => {
         demoNode.__vue__.$on(name, () => {
           Vue.set(obj, 'emited', true)
           setTimeout(() => {
@@ -46,7 +46,7 @@ export default {
     }
   },
   props: {
-    rows: {
+    events: {
       type: Object,
       required: true
     }

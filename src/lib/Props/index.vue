@@ -73,7 +73,7 @@ export default {
     type (type) {
       if (isArray(type)) {
         type = type.map(t => t.name).join(', ')
-      } else if (type) {
+      } else if (type && type.name) {
         type = type.name
       }
       return type || '*'

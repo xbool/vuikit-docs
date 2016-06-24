@@ -18,6 +18,18 @@ router.map({
     name: 'Props',
     component: require('./views/Props.vue')
   },
+  '/events': {
+    name: 'Events',
+    component: require('./views/Events.vue')
+  },
+  '/slots': {
+    name: 'Slots',
+    component: require('./views/Slots.vue')
+  },
+  '/code': {
+    name: 'Code',
+    component: require('./views/Code.vue')
+  },
   '/section-example': {
     name: 'Section Example',
     component: require('./views/SectionExample.vue')

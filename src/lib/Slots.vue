@@ -7,7 +7,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(name, row) in rows"
+      <tr v-for="(name, row) in slots"
         class="uk-table-middle">
         <td v-text="name"></td>
         <td v-html="row.description"></td>
@@ -19,7 +19,7 @@
 <script>
 export default {
   props: {
-    rows: {
+    slots: {
       type: Object,
       required: true
     }

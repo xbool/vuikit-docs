@@ -1,13 +1,14 @@
 import Docs from './Docs'
-import Section from './Section'
 import Props from './Props'
+import Events from './Events'
+import Slots from './Slots'
 import Code from './Code'
-import vCode from './vCode'
 
 const plugin = {
   Docs,
-  Section,
   Props,
+  Events,
+  Slots,
   Code,
   install (Vue) {
     if (this.installed) {
@@ -19,8 +20,6 @@ const plugin = {
     while (i--) {
       Vue.component(`VkDocs${keys[i]}`, this[keys[i]])
     }
-    // declare directives
-    Vue.directive('vk-code', vCode)
   }
 }
 
@@ -30,8 +29,9 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 export {
   Docs,
-  Section,
   Props,
+  Events,
+  Slots,
   Code,
   plugin as default
 }

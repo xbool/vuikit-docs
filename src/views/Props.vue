@@ -2,58 +2,76 @@
   <div>
     <h2>Props</h2>
     <hr class="uk-article-divider">
-    <!-- DEMO -->
-    <vk-docs-props vk-ref-demo
-      :props="props">
-    </vk-docs-props>
     <!-- DESC -->
     <div class="uk-margin-large">
       <p>The <code>vk-docs-props</code> component renders a detailed table describing
       the component props. Optionally a demo field can be displayed for each prop with
-      control inputs adapted to each type of prop.</p>
-      <p>When the props object is properly shared bitween the demo and the table,
-      the docs become interactive as seen in the <a href="http://vuikit.github.io/vuikit/" target="_blank">Vuikit main docs</a>.</p>
-      <vk-docs-code>
-        <vk-button-radio>
-          <vk-button value="1">1</vk-button>
-        </vk-button-radio>
-      </vk-docs-code>
+      control inputs adapted to each type of prop. When the props object is properly
+      shared bitween the demo and the component the docs become interactive as can be
+      seen in the <a href="http://vuikit.github.io/vuikit/" target="_blank">Vuikit docs</a>.</p>
+      <p>The only prop required is <code>props</code>, an Object defining the props fields following the
+      same structure as Vue Component props definition, but with two additional fields,
+      <code>description</code> and <code>demo</code>. For more information about the fields checkout
+      the below example.</p>
     </div>
+    <!-- TABS -->
+    <vk-tabs>
+      <vk-tab label="Example">
+        <vk-docs-code>
+<vk-docs-props :props="{
+  foo: {
+    type: 'String',
+    default: '',
+    description: 'Prop description',
+    demo: {
+      options: [1, 2, 3],
+      value: 3
+    }
+  },
+  bar: {
+    type: 'Boolean',
+    default: '',
+    description: 'Prop description',
+    demo: {
+      value: true
+    }
+  }
+}"></vk-docs-props>
+        </vk-docs-code>
+      </vk-tab>
+      <vk-tab label="Result">
+        <vk-docs-props
+          :props="demoProps">
+        </vk-docs-props>
+      </vk-tab>
+    </vk-tabs>
   </div>
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
-
-const Component = require('vuikit').ButtonRadio
-
 export default {
   data: () => ({
-    props: merge(props, pick(Component.props, Object.keys(props))),
-    slots,
-    code
+    demoProps
   })
 }
 
-const code =
-`<vk-button-radio {props}>
-  <vk-button value="1">1</vk-button>
-  <vk-button value="2">2</vk-button>
-  <vk-button value="3">3</vk-button>
-</vk-button-radio>`
-
-const props = {
-  prop: {
-    description: 'Prop description explaining what is its purpose.',
-    type: Boolean,
+const demoProps = {
+  foo: {
+    type: 'String',
+    default: '',
+    description: 'Prop description',
+    demo: {
+      options: [1, 2, 3],
+      value: 3
+    }
+  },
+  bar: {
+    type: 'Boolean',
     default: false,
-    demo: {}
-  }
-}
-
-const slots = {
-  default: {
-    description: 'The button group inner text.'
+    description: 'Prop description',
+    demo: {
+      value: true
+    }
   }
 }
 </script>

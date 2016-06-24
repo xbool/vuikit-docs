@@ -28,21 +28,6 @@
       For demo purposes we are displaying a VkButtonRadio which props and options
       illustrates well the <code>vk-docs-section</code> capabilites.
     </div>
-    <!-- TABS -->
-    <vk-tabs>
-      <vk-tab label="Props">
-        <vk-docs-props :props="props"></vk-docs-props>
-      </vk-tab>
-      <vk-tab label="Slots">
-        <!-- <table-slots :rows="slots"></table-slots> -->
-      </vk-tab>
-      <vk-tab label="Events">
-        <!-- <table-events :rows="events"></table-events> -->
-      </vk-tab>
-      <vk-tab label="Code">
-        <!-- <pre><code v-code="demoCode"></code></pre> -->
-      </vk-tab>
-    </vk-tabs>
   </div>
 </template>
 
