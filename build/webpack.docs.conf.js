@@ -10,16 +10,20 @@ var env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
 
-var webpackConfig = merge(baseWebpackConfig, {
+module.exports = merge(baseWebpackConfig, {
+  entry: {
+    app: './src/main.js'
+  },
+  output: {
+    path: config.build.assetsRoot,
+    publicPath: '',
+    filename: utils.assetsPath('js/[name].[chunkhash].js'),
+    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+  },
   module: {
     loaders: utils.styleLoaders({ sourceMap: config.build.productionSourceMap, extract: true })
   },
   devtool: config.build.productionSourceMap ? '#source-map' : false,
-  output: {
-    path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
-  },
   vue: {
     loaders: utils.cssLoaders({
       sourceMap: config.build.productionSourceMap,
@@ -31,14 +35,19 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    // extract css into its own file
+    new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
+    // add banner on top of each file
+    new webpack.BannerPlugin(config.build.banner, {
+      raw: true,
+      entryOnly: true
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       }
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    // extract css into its own file
-    new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
@@ -46,7 +55,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       filename: process.env.NODE_ENV === 'testing'
         ? 'index.html'
         : config.build.index,
-      template: 'index.html',
+      template: 'index.ejs',
       inject: true,
       minify: {
         removeComments: true,
@@ -77,31 +86,6 @@ var webpackConfig = merge(baseWebpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'manifest',
       chunks: ['vendor']
-    }),
-    // add banner on top of each file
-    new webpack.BannerPlugin(config.banner, {
-      raw: true,
-      entryOnly: true
     })
   ]
 })
-
-if (config.build.productionGzip) {
-  var CompressionWebpackPlugin = require('compression-webpack-plugin')
-
-  webpackConfig.plugins.push(
-    new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: new RegExp(
-        '\\.(' +
-        config.build.productionGzipExtensions.join('|') +
-        ')$'
-      ),
-      threshold: 10240,
-      minRatio: 0.8
-    })
-  )
-}
-
-module.exports = webpackConfig

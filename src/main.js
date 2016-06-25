@@ -11,7 +11,7 @@ Vue.use(VueRouter)
 
 // create router
 const router = new VueRouter({
-  history: true,
+  root: 'vuikit-docs',
   linkActiveClass: 'uk-active'
 })
 

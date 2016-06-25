@@ -1,11 +1,13 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
+var version = require('../package.json').version
 
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../dist/index.html'),
-    assetsRoot: path.resolve(__dirname, '../dist'),
+    index: path.resolve(__dirname, '../docs/index.html'),
+    assetsRoot: path.resolve(__dirname, '../docs'),
+    distRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     productionSourceMap: true,
@@ -14,7 +16,13 @@ module.exports = {
     // Before setting to `true`, make sure to:
     // npm install --save-dev compression-webpack-plugin
     productionGzip: false,
-    productionGzipExtensions: ['js', 'css']
+    productionGzipExtensions: ['js', 'css'],
+    banner:
+      '/*!\n' +
+      ' * VuikitDocs v' + version + ' (https://github.com/vuikit/vuikit-docs)\n' +
+      ' * (c) ' + new Date().getFullYear() + ' ZOOlanders\n' +
+      ' * Released under the MIT License.\n' +
+      ' */'
   },
   dev: {
     env: require('./dev.env'),

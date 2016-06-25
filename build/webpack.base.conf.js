@@ -4,16 +4,10 @@ var utils = require('./utils')
 var projectRoot = path.resolve(__dirname, '../')
 
 module.exports = {
-  entry: {
-    app: './src/main.js'
-  },
   output: {
     path: config.build.assetsRoot,
     publicPath: config.build.assetsPublicPath,
     filename: '[name].js'
-  },
-  externals: {
-    uikit: 'UIkit'
   },
   resolve: {
     extensions: ['', '.js', '.vue'],

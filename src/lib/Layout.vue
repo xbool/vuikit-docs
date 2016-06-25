@@ -55,30 +55,3 @@ export default {
   }
 }
 </script>
-
-<style>
-/*
- * Blocks
- */
-
-.tm-middle,
-.tm-footer { padding: 50px 0; }
-
-/*
- * Nav
- */
-.tm-nav > li > a:hover,
-.tm-nav > li > a:focus,
-.tm-nav > li.uk-active > a {
-  background: #F5F5F5;
-  color: #444;
-}
-
-/*
- * Sidebar
- */
-.tm-sidebar {
-  border-right: 1px solid #E5E5E5;
-  margin-right: -1px !important;
-}
-</style>
