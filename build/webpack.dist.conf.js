@@ -14,8 +14,8 @@ var baseWebpackConfig = merge(require('./webpack.base.conf'), {
     'vuikit-docs': './src/lib/'
   },
   externals: {
-    uikit: 'UIkit',
-    vue: 'Vue'
+    uikit: 'uikit',
+    vue: 'vue'
   },
   module: {
     loaders: utils.styleLoaders({ sourceMap: config.build.productionSourceMap, extract: true })
