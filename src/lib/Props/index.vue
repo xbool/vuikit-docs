@@ -27,7 +27,7 @@
             :options="prop.demo.options"
             :editable="prop.demo.editable">
           </td>
-          <td v-else
+          <td v-if="renderDemo && !prop.demo"
             class="tm-docs-hidden-small">
           </td>
         </tr>
