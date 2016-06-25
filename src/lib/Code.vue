@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { each, isArray, mapValues, pickBy, isEqual, isObject, isEmpty, kebabCase } from 'lodash'
 import beautify from 'js-beautify'
 import hljs from 'highlight.js/lib/highlight'
 // init html highlighting
@@ -21,21 +20,6 @@ export default {
     text = this.highlight(text)
     this.$el.innerHTML = text
   },
-  computed: {
-    demoCode () {
-      const propsDefaults = mapValues(this.props, prop => typeof prop.default === 'function'
-        ? prop.default.call()
-        : prop.default)
-      // get demo props which value differ from defaults
-      const demoProps = pickBy(mapValues(this.props, 'value'), (value, key) => {
-        return value !== undefined && !isEqual(value, propsDefaults[key])
-      })
-      // convert props to attributes
-      var attrs = toAttrs(demoProps)
-      // replace attrs and return the final code
-      return this.code.replace('{props}', attrs)
-    }
-  },
   methods: {
     update (value) {
       value = this.beautify(value)
@@ -48,49 +32,13 @@ export default {
         wrap_attributes_indent_size: 2,
         indent_size: 2
       })
-      // // add new line for closing tags, if no children
-      // .replace(/><\/vk-(.*)>$/g, '>\n</vk-$1>')
-      // // add new line on first attr for main component
-      // .replace(/^<vk-(\S*) (\S*)/, '<vk-$1\n  $2')
+      // add new line for closing tags, if no children
+      .replace(/><\/vk-(.*)>$/g, '>\n</vk-$1>')
     },
     highlight (str) {
       return hljs.highlight('html', str).value
     }
   }
-}
-
-/*
- * Converts an Object to String as node attributes
- */
-function toAttrs (props) {
-  let attrs = ''
-  each(props, (value, key) => {
-    // literal trues can be set without value, eg. disabled
-    if (value === true) {
-      value = ''
-    }
-    // literal numbers requires binding (:) to be evaluated as such
-    if (Number.isInteger(value) || value === false) {
-      key = `:${key}`
-    }
-    // Arrays and Objects
-    if (isArray(value) || isObject(value)) {
-      // skip if empty
-      if (isEmpty(value)) {
-        return true
-      }
-      // convert into literal
-      value = JSON.stringify(value)
-      // convert double quotes
-      value = value.replace(/"/g, '\'')
-      // bind is required
-      key = `:${key}`
-    }
-    attrs += value
-      ? `${kebabCase(key)}="${value}" `
-      : `${kebabCase(key)} `
-  })
-  return attrs
 }
 </script>
 

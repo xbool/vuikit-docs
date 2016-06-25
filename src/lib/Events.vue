@@ -14,8 +14,7 @@
         <td v-html="row.description"></td>
         <td class="uk-form uk-text-center">
           <i :class="{
-            'uk-icon-circle-o': !row.emited,
-            'uk-icon-circle': row.emited,
+            'uk-icon-circle': true,
             'uk-text-success': row.emited
           }"></i>
         </td>

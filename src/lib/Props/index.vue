@@ -19,7 +19,7 @@
             <code v-text="prop.default | stringify"></code>
           </td>
           <td class="tm-docs-hidden-small" v-html="prop.description"></td>
-          <td v-if="prop.demo" is="DemoField"
+          <td v-if="prop.demo" is="Demo"
             class="tm-docs-hidden-small"
             :default="prop.default"
             :type="prop.type | type"
@@ -42,7 +42,7 @@
 <script>
 import Vue from 'vue'
 import { isObject, isArray, some, each } from 'lodash'
-import DemoField from './DemoField'
+import Demo from './Demo'
 
 export default {
   created () {
@@ -57,7 +57,7 @@ export default {
       }
     })
   },
-  components: { DemoField },
+  components: { Demo },
   props: {
     props: {
       type: Object,

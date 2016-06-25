@@ -28,7 +28,7 @@
           </div>
           <div class="uk-width-medium-3-4">
             <article class="uk-article">
-              <router-view></router-view>
+              <router-view keep-alive></router-view>
             </article>
           </div>
         </div>
@@ -80,26 +80,5 @@ export default {
 .tm-sidebar {
   border-right: 1px solid #E5E5E5;
   margin-right: -1px !important;
-}
-
-/*
- * Docs pages
- */
-.tm-docs-subtitle {
-  margin: 60px 0 0 0;
-}
-
-/*
- * Responsive
- */
-@media (min-width: 501px) and (max-width: 959px) {
-  .tm-docs-hidden-medium {
-    display: none !important;
-  }
-}
-@media (max-width: 500px) {
-  .tm-docs-hidden-small {
-    display: none !important;
-  }
 }
 </style>

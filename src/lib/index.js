@@ -1,11 +1,11 @@
-import Docs from './Docs'
+import Layout from './Layout'
 import Props from './Props'
 import Events from './Events'
 import Slots from './Slots'
 import Code from './Code'
 
 const plugin = {
-  Docs,
+  Layout,
   Props,
   Events,
   Slots,
@@ -28,7 +28,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export {
-  Docs,
+  Layout,
   Props,
   Events,
   Slots,

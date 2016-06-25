@@ -1,9 +1,5 @@
 <template>
   <div>
-    <vk-docs-docs></vk-docs-docs>
+    <vk-docs-layout></vk-docs-layout>
   </div>
 </template>
-
-<script>
-export default {}
-</script>
