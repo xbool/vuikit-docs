@@ -16,18 +16,26 @@
     <vk-tabs>
       <vk-tab label="Example">
         <vk-docs-code>
-<vk-docs-events :events="{
-  foo: {
-    description: 'The event description.'
-  },
-  bar: {
-    description: 'Some other event description.'
+<vk-button-radio>
+  <vk-button>1</vk-button>
+  <vk-button>2</vk-button>
+</vk-button-radio>
+
+<vk-docs-events :connect="$refs.demo" :events="{
+  change: {
+    description: 'Emited on value change.'
   }
 }"></vk-docs-events>
         </vk-docs-code>
       </vk-tab>
       <vk-tab label="Result">
+        <vk-button-radio v-ref:demo>
+          <vk-button>1</vk-button>
+          <vk-button>2</vk-button>
+        </vk-button-radio>
+
         <vk-docs-events
+          :connect="$refs.demo"
           :events="demoEvents">
         </vk-docs-events>
       </vk-tab>
@@ -38,16 +46,11 @@
 <script>
 export default {
   data: () => ({
-    demoEvents
+    demoEvents: {
+      change: {
+        description: 'Emited on value change.'
+      }
+    }
   })
-}
-
-const demoEvents = {
-  foo: {
-    description: 'The event description.'
-  },
-  bar: {
-    description: 'Some other event description.'
-  }
 }
 </script>

@@ -29,12 +29,10 @@ import { each } from 'lodash'
 
 export default {
   ready () {
-    // get demo element from context
-    const demoNode = getElementsByAttribute('vk-ref-events', this._context.$el)[0]
-    if (demoNode) {
+    if (this.connect) {
       // listen for all events triggered by the demo
       each(this.events, (obj, name) => {
-        demoNode.__vue__.$on(name, () => {
+        this.connect.$on(name, () => {
           Vue.set(obj, 'emited', true)
           setTimeout(() => {
             // revert value after
@@ -48,21 +46,11 @@ export default {
     events: {
       type: Object,
       required: true
+    },
+    connect: {
+      type: [Object, Boolean],
+      default: false
     }
   }
-}
-
-/*
- * Get DOM elements by attribute
- */
-function getElementsByAttribute (attribute, container) {
-  const matchingElements = []
-  const allElements = (container || document).getElementsByTagName('*')
-  for (let i = 0, n = allElements.length; i < n; i++) {
-    if (allElements[i].getAttribute(attribute) !== null) {
-      matchingElements.push(allElements[i])
-    }
-  }
-  return matchingElements
 }
 </script>
