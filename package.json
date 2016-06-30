@@ -41,7 +41,7 @@
     "lodash": "^4.12.0",
     "uikit": "^2.26.0",
     "vue": "^1.0.25",
-    "vue-router": "^0.7.13"
+    "vuikit": "^0.3.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -74,6 +74,7 @@
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
     "vue-loader": "^8.3.0",
+    "vue-router": "^0.7.13",
     "vue-style-loader": "^1.0.0",
     "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.4.0",
