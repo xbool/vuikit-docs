@@ -9,7 +9,9 @@
 VuikitDocs is a set of components, part of the Vuikit collection, crafted specifically for
 building Documentation Vue Apps.
 
-We have setup a live [demo](http://vuikit.github.io/vuikit-docs) with technical information for each component.
+## Demo & Examples
+
+We have setup a live demo at [http://vuikit.github.io/vuikit-docs](http://vuikit.github.io/vuikit-docs) with technical information for each component.
 
 ## Dependencies
 
