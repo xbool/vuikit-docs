@@ -4,16 +4,13 @@ import Events from './Events'
 import Slots from './Slots'
 import Code from './Code'
 
-const plugin = {
+const VuikitDocs = {
   Layout,
   Props,
   Events,
   Slots,
   Code,
   install (Vue) {
-    if (this.installed) {
-      return
-    }
     const keys = Object.keys(this)
     keys.pop() // remove 'install' from keys
     let i = keys.length
@@ -24,14 +21,7 @@ const plugin = {
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(plugin)
+  window.Vue.use(VuikitDocs)
 }
 
-export {
-  Layout,
-  Props,
-  Events,
-  Slots,
-  Code,
-  plugin as default
-}
+module.exports = VuikitDocs
