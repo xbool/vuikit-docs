@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="uk-block">
     <h2>Layout</h2>
     <hr class="uk-article-divider">
     <!-- DESC -->

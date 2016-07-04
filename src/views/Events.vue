@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="uk-block">
     <h2>Events</h2>
     <hr class="uk-article-divider">
     <!-- DESC -->
@@ -15,18 +15,7 @@
     <!-- TABS -->
     <vk-tabs>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-button-radio>
-  <vk-button>1</vk-button>
-  <vk-button>2</vk-button>
-</vk-button-radio>
-
-<vk-docs-events :connect="$refs.demo" :events="{
-  change: {
-    description: 'Emited on value change.'
-  }
-}"></vk-docs-events>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
       <vk-tab label="Result">
         <vk-button-radio v-ref:demo>
@@ -36,7 +25,7 @@
 
         <vk-docs-events
           :connect="$refs.demo"
-          :events="demoEvents">
+          :events="events">
         </vk-docs-events>
       </vk-tab>
     </vk-tabs>
@@ -46,11 +35,24 @@
 <script>
 export default {
   data: () => ({
-    demoEvents: {
+    events: {
       change: {
         description: 'Emited on value change.'
       }
-    }
+    },
+    code
   })
 }
+
+const code =
+`<vk-button-radio>
+  <vk-button>1</vk-button>
+  <vk-button>2</vk-button>
+</vk-button-radio>
+
+<vk-docs-events :connect="$refs.demo" :events="{
+  change: {
+    description: 'Emited on value change.'
+  }
+}"></vk-docs-events>`
 </script>

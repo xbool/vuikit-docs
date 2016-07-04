@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="uk-block">
     <h2>Props</h2>
     <hr class="uk-article-divider">
     <!-- DESC -->
@@ -17,8 +17,25 @@
     <!-- TABS -->
     <vk-tabs>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-docs-props :props="{
+        <vk-docs-code :code="code"></vk-docs-code>
+      </vk-tab>
+      <vk-tab label="Result">
+        <vk-docs-props :props="props"></vk-docs-props>
+      </vk-tab>
+    </vk-tabs>
+  </div>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    props,
+    code
+  })
+}
+
+const code =
+`<vk-docs-props :props="{
   foo: {
     type: 'String',
     default: '',
@@ -36,26 +53,9 @@
       value: true
     }
   }
-}"></vk-docs-props>
-        </vk-docs-code>
-      </vk-tab>
-      <vk-tab label="Result">
-        <vk-docs-props
-          :props="demoProps">
-        </vk-docs-props>
-      </vk-tab>
-    </vk-tabs>
-  </div>
-</template>
+}"></vk-docs-props>`
 
-<script>
-export default {
-  data: () => ({
-    demoProps
-  })
-}
-
-const demoProps = {
+const props = {
   foo: {
     type: 'String',
     default: '',

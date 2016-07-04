@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="static/logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
     <title>VuikitDocs - Vuikit library for Documentation Apps</title>
     <link rel="stylesheet" type="text/css" href="static/css/uikit.css">
   </head>
@@ -12,21 +12,26 @@
     <!-- built files will be auto injected -->
     <% if (htmlWebpackPlugin.options.env === '"development"') { %>
     <script src="static/js/jquery.js"></script>
+    <script src="static/js/uikit.js"></script>
     <% } else { %>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/uikit.min.js"></script>
     <div class="tm-footer">
-    <div class="uk-container uk-container-center uk-text-center">
-      <ul class="uk-subnav uk-subnav-line uk-flex-center">
-        <li><a href="http://github.com/vuikit/vuikit-docs">GitHub</a></li>
-        <li><a href="http://github.com/vuikit/vuikit-docs/issues">Issues</a></li>
-        <li><a href="http://github.com/vuikit/vuikit-docs/blob/master/CHANGELOG.md">Changelog</a></li>
-      </ul>
-      <div class="uk-panel">
-        <p>Made by <a href="http://www.zoolanders.com">ZOOlanders</a> with love, UIkit and Vue.<br>Licensed under <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
+      <div class="uk-container uk-container-center uk-text-center">
+        <ul class="uk-subnav uk-subnav-line uk-flex-center">
+          <li><a href="http://github.com/vuikit/vuikit-docs">GitHub</a></li>
+          <li><a href="http://github.com/vuikit/vuikit-docs/issues">Issues</a></li>
+          <li><a href="http://github.com/vuikit/vuikit-docs/blob/master/CHANGELOG.md">Changelog</a></li>
+        </ul>
+        <div class="uk-panel">
+          <p>Made by <a href="http://www.zoolanders.com">ZOOlanders</a> with love, <a href="http://www.getuikit.com">UIkit</a> and <a href="http://www.vuejs.org">Vue</a>.
+            <br>Licensed under <a href="http://opensource.org/licenses/MIT">MIT license</a>.
+          </p>
+          <a href="">
+            <img src="static/logo-vuikit.svg" width="90" title="Vuikit" alt="Vuikit">
+          </a>
+        </div>
       </div>
-      <a href="/">
-        <img src="static/logo.png" width="90" height="90" title="Vuikit" alt="Vuikit">
-      </a>
     </div>
     <% } %>
   </body>

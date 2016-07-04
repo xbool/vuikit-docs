@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="uk-block">
     <h2>Slots</h2>
     <hr class="uk-article-divider">
     <!-- DESC -->
@@ -12,21 +12,10 @@
     <!-- TABS -->
     <vk-tabs>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-docs-slots :slots="{
-  foo: {
-    description: 'The event description.'
-  },
-  bar: {
-    description: 'Some other event description.'
-  }
-}"></vk-docs-slots>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
       <vk-tab label="Result">
-        <vk-docs-slots
-          :slots="demoSlots">
-        </vk-docs-slots>
+        <vk-docs-slots :slots="slots"></vk-docs-slots>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -35,11 +24,22 @@
 <script>
 export default {
   data: () => ({
-    demoSlots
+    slots,
+    code
   })
 }
 
-const demoSlots = {
+const code =
+`<vk-docs-slots :slots="{
+  foo: {
+    description: 'The event description.'
+  },
+  bar: {
+    description: 'Some other event description.'
+  }
+}"></vk-docs-slots>`
+
+const slots = {
   foo: {
     description: 'The slot description.'
   },
