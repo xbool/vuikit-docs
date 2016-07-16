@@ -13,7 +13,7 @@
       <tbody>
         <tr v-for="(name, prop) in props"
           class="uk-table-middle">
-          <td v-text="name"></td>
+          <td class="uk-text-nowrap" v-text="name"></td>
           <td class="tm-docs-hidden-medium" v-text="prop.type | type"></td>
           <td class="tm-docs-hidden-medium uk-text-truncate">
             <code v-text="prop.default | stringify"></code>
