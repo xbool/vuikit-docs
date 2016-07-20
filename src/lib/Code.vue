@@ -1,41 +1,46 @@
-<template>
-  <pre v-html="code | beautify | highlight"></pre>
-</template>
-
 <script>
 import beautify from 'js-beautify'
 import hljs from 'highlight.js/lib/highlight'
 
+hljs.registerLanguage('html', require('highlight.js/lib/languages/xml'))
+hljs.registerLanguage('json', require('highlight.js/lib/languages/json'))
+hljs.registerLanguage('javascript', require('highlight.js/lib/languages/javascript'))
+
 export default {
-  init () {
-    // init html highlighting
-    hljs.registerLanguage('html', require('highlight.js/lib/languages/xml'))
+  name: 'VkDocsCode',
+  render (h) {
+    return h('pre', {
+      domProps: {
+        innerHTML: this.$slots.default
+          ? this.formatCode(this.$slots.default[0].text)
+          : ''
+      }
+    })
   },
   props: {
-    code: {
+    language: {
       type: String,
-      default: ''
-    }
-  },
-  compiled () {
-    if (!this.code && this._slotContents) {
-      // if no code provided retrieve it from default slot
-      const div = document.createElement('div')
-      const fragment = this._slotContents.default
-      div.appendChild(fragment.cloneNode(true))
-      this.code = div.innerHTML.trim()
-    }
-  },
-  filters: {
-    beautify (str) {
-      return beautify.html(str, {
+      default: 'html'
+    },
+    beautifyOptions: {
+      type: Object,
+      default: () => ({
         wrap_attributes: 'force',
         wrap_attributes_indent_size: 2,
         indent_size: 2
       })
-    },
-    highlight (str) {
-      return hljs.highlight('html', str).value
+    }
+  },
+  methods: {
+    formatCode (code) {
+      // beautify it
+      if (this.language === 'js' || this.language === 'json') {
+        code = beautify.js(code, this.beautifyOptions)
+      } else {
+        code = beautify.html(code, this.beautifyOptions)
+      }
+      // highlight it
+      return hljs.highlight(this.language, code).value
     }
   }
 }

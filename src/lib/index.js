@@ -1,4 +1,5 @@
 import Layout from './Layout'
+import LayoutPage from './LayoutPage'
 import Props from './Props'
 import Events from './Events'
 import Slots from './Slots'
@@ -6,6 +7,7 @@ import Code from './Code'
 
 const VuikitDocs = {
   Layout,
+  LayoutPage,
   Props,
   Events,
   Slots,

@@ -1,17 +1,4 @@
-<template>
-  <div>
-    <vk-docs-layout></vk-docs-layout>
-  </div>
-</template>
-
 <style>
-/*
- * Blocks
- */
-
-.tm-middle,
-.tm-footer { padding: 50px 0; }
-
 /*
  * Nav
  */
@@ -33,7 +20,6 @@
 /*
  Highlight - github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 */
-
 .hljs-comment,
 .hljs-quote {
   color: #998;

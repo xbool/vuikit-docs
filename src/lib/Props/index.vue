@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="vk-docs-props">
     <table class="uk-table uk-table-striped uk-table-condensed">
       <thead>
         <tr>
@@ -7,28 +7,33 @@
           <th class="tm-docs-hidden-medium">Type</th>
           <th class="tm-docs-hidden-medium">Default</th>
           <th class="tm-docs-hidden-small">Description</th>
-          <th class="tm-docs-hidden-small" v-if="renderDemo">Demo</th>
+          <th v-if="hasDemoColumn"
+            class="tm-docs-hidden-small"
+            v-text="'Demo'">
+          </th>
       </tr>
       </thead>
       <tbody>
-        <tr v-for="(name, prop) in props"
+        <tr v-for="(prop, name) in props"
           class="uk-table-middle">
           <td class="uk-text-nowrap" v-text="name"></td>
-          <td class="tm-docs-hidden-medium" v-text="prop.type | type"></td>
+          <td class="tm-docs-hidden-medium">
+            {{ prop.type || '*' }}
+          </td>
           <td class="tm-docs-hidden-medium uk-text-truncate">
-            <code v-text="prop.default | stringify"></code>
+            <code>{{ prop.default | stringify }}</code>
           </td>
           <td class="tm-docs-hidden-small" v-html="prop.description"></td>
-          <td v-if="prop.demo" is="Demo"
-            class="tm-docs-hidden-small"
-            :default="prop.default"
-            :type="prop.type | type"
-            :value.sync="prop.demo.value"
-            :options="prop.demo.options"
-            :editable="prop.demo.editable">
-          </td>
-          <td v-if="renderDemo && !prop.demo"
-            class="tm-docs-hidden-small">
+          <td v-if="hasDemoColumn"
+            class="tm-docs-hidden-small uk-form uk-text-truncate">
+            <demo-field v-if="prop.demo"
+              :name="name"
+              :type="prop.demo.type || prop.type"
+              :def="prop.default"
+              :options="prop.demo.options"
+              :value="prop.demo.value"
+              @change="$emit('change', name, arguments[0])">
+            </demo-field>
           </td>
         </tr>
       </tbody>
@@ -40,24 +45,14 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { isObject, isArray, some, each } from 'lodash'
-import Demo from './Demo'
+import { isObject, isArray, some } from 'lodash'
+import DemoField from './Field'
 
 export default {
-  created () {
-    each(this.props, prop => {
-      // evaluate default
-      if (prop.default && typeof prop.default === 'function') {
-        prop.default = prop.default.call()
-      }
-      // set demo value
-      if (prop.demo && prop.demo.value === undefined) {
-        Vue.set(prop.demo, 'value', prop.default)
-      }
-    })
+  name: 'VkDocsProps',
+  components: {
+    DemoField
   },
-  components: { Demo },
   props: {
     props: {
       type: Object,
@@ -65,31 +60,23 @@ export default {
     }
   },
   computed: {
-    renderDemo () {
+    hasDemoColumn () {
       return some(this.props, prop => prop.demo !== undefined)
     }
   },
   filters: {
-    type (type) {
-      if (isArray(type)) {
-        type = type.map(t => t.name).join(', ')
-      } else if (type && type.name) {
-        type = type.name
-      }
-      return type || '*'
-    },
     stringify (value) {
-      // special case if not empty object
-      if (isObject(value) && Object.keys(value).length) {
-        return '{...}'
-      }
       // or non empty array
       if (isArray(value) && value.length) {
         return '[...]'
       }
+      // special case if not empty object
+      if (isObject(value) && Object.keys(value).length) {
+        return '{...}'
+      }
       // no defined means any value accepted
       if (value === undefined) {
-        return 'N/A'
+        return '*'
       }
       // for the rest
       return JSON.stringify(value)

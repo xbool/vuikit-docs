@@ -1,5 +1,5 @@
 <template>
-  <table class="uk-table uk-table-striped uk-table-condensed">
+  <table class="vk-docs-events uk-table uk-table-striped uk-table-condensed">
     <thead>
       <tr>
         <th>Name</th>
@@ -8,9 +8,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(name, row) in events"
+      <tr v-for="(row, name) in events"
         class="uk-table-middle">
-        <td v-text="name"></td>
+        <td class="uk-text-nowrap" v-text="name"></td>
         <td v-html="row.description"></td>
         <td class="uk-form uk-text-center">
           <i :class="{
@@ -25,31 +25,31 @@
 
 <script>
 import Vue from 'vue'
-import { each } from 'lodash'
+import { each } from '../util'
+
+const timouts = {}
 
 export default {
-  ready () {
-    if (this.connect) {
-      // listen for all events triggered by the demo
-      each(this.events, (obj, name) => {
-        this.connect.$on(name, () => {
-          Vue.set(obj, 'emited', true)
-          setTimeout(() => {
+  name: 'VkDocsEvents',
+  watch: {
+    'events': {
+      deep: true,
+      handler (val) {
+        // some event was emited, reset it
+        each(this.events, (obj, eventName) => {
+          clearTimeout(timouts[eventName])
+          timouts[eventName] = setTimeout(() => {
             // revert value after
             Vue.set(obj, 'emited', false)
-          }, 400)
+          }, 600)
         })
-      })
+      }
     }
   },
   props: {
     events: {
       type: Object,
       required: true
-    },
-    connect: {
-      type: [Object, Boolean],
-      default: false
     }
   }
 }
